@@ -1,0 +1,80 @@
+### Login (valid)
+# @name login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword123"
+}
+
+### Save token
+@token = {{login.response.body.token}}
+
+### List all todos (needs token)
+GET http://localhost:3000/todos
+Authorization: Bearer {{token}}
+
+### List todos with status filter (pending)
+GET http://localhost:3000/todos?statut=pending
+Authorization: Bearer {{token}}
+
+### Create a new todo (valid)
+# @name createTodo
+POST http://localhost:3000/todos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Faire les courses",
+  "description": "Acheter du lait et du pain",
+  "dueDate": "2025-05-10T12:00:00.000Z"
+}
+
+### Create a new todo (invalid: missing title)
+POST http://localhost:3000/todos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "description": "Pas de titre",
+  "dueDate": "2025-05-10T12:00:00.000Z"
+}
+
+### Get todo by ID (replace :id)
+GET http://localhost:3000/todos/1
+Authorization: Bearer {{token}}
+
+### Update todo (replace :id)
+PUT http://localhost:3000/todos/2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Faire les courses (modifié)",
+  "statut": "done"
+}
+
+### Delete todo (replace :id)
+DELETE http://localhost:3000/todos/2
+Authorization: Bearer {{token}}
+
+### Import todos (CSV, needs file upload)
+POST http://localhost:3000/todos/import
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=---011000010111000001101001
+
+-----011000010111000001101001
+Content-Disposition: form-data; name="file"; filename="todos.csv"
+Content-Type: text/csv
+
+< ./tests/todos.csv
+-----011000010111000001101001--
+
+### List all todos (needs token)
+GET http://localhost:3000/todos
+Authorization: Bearer {{token}}
+
+### Export todos (CSV)
+GET http://localhost:3000/todos/export
+Authorization: Bearer {{token}}
