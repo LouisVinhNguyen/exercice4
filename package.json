@@ -1,9 +1,22 @@
 {
   "name": "exercice4",
   "version": "1.0.0",
+  "description": "API pour la gestion de tâches avec authentification, validation, import/export CSV et opérations CRUD.",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LouisVinhNguyen/exercice4.git"
+  },
+  "keywords": [],
+  "author": "LouisVinhNguyen",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "commonjs",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
